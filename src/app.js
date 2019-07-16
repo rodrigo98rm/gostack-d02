@@ -1,21 +1,21 @@
 import express from 'express';
 import routes from './routes';
+import './database';
 
 class App {
-  constructor(){
+  constructor() {
     this.server = express();
     this.middlewares();
     this.routes();
   }
 
-  middlewares(){
+  middlewares() {
     this.server.use(express.json()); // Receber body de requests em JSON
   }
 
-  routes(){
+  routes() {
     this.server.use(routes); // Configurar as rotas definidas no arquivo routes.js
   }
-
 }
 
 export default new App().server;
