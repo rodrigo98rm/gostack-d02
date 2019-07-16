@@ -8,7 +8,9 @@ class UserController {
     const schema = Joi.object({
       name: Joi.string().required(),
       email: Joi.string().email(),
-      password_hash: Joi.string().required(),
+      password: Joi.string()
+        .required()
+        .min(6),
     });
 
     const { error } = schema.validate(req.body);
@@ -19,7 +21,7 @@ class UserController {
     }
 
     // Check if user already exists on db
-    const userExists = User.findOne({ where: { email: req.body.email } });
+    const userExists = await User.findOne({ where: { email: req.body.email } });
     if (userExists) {
       return res.status(400).json({ error: 'User already exists' });
     }
